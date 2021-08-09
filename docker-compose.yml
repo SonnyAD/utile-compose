@@ -1,0 +1,18 @@
+version: "3.9"
+services:
+  docs:
+      build: utile-api-docs/.
+      ports: 
+        - "8000:8080"
+  api: 
+      build: utile-api/.
+      ports: 
+        - "3000:3000"
+  front: 
+      build: utile-front/.
+      ports: 
+        - "4000:80"
+  nginx:
+      build: utile-nginx/.
+      ports: 
+          - "80:80"
