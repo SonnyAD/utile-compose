@@ -10,3 +10,6 @@
 [submodule "utile-nginx"]
 	path = utile-nginx
 	url = https://github.com/SonnyAD/utile-nginx
+[submodule "utile-bdd"]
+	path = utile-bdd
+	url = https://github.com/SonnyAD/utile-bdd.git
