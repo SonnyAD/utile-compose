@@ -11,7 +11,7 @@ services:
   front: 
       build: utile-front/.
       ports: 
-        - "4000:80"
+        - "2000:3000"
   nginx:
       build: utile-nginx/.
       ports: 
