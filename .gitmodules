@@ -17,4 +17,4 @@
 [submodule "utile-bdd"]
 	path = utile-bdd
 	url = https://github.com/SonnyAD/utile-bdd.git
-	branch = main
+	branch = develop
