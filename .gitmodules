@@ -1,15 +1,20 @@
 [submodule "utile-api-docs"]
 	path = utile-api-docs
 	url = https://github.com/SonnyAD/utile-api-docs.git
+	branch = main
 [submodule "utile-api"]
 	path = utile-api
 	url = https://github.com/SonnyAD/utile-api
+	branch = main
 [submodule "utile-front"]
 	path = utile-front
 	url = https://github.com/SonnyAD/utile-front
+	branch = main
 [submodule "utile-nginx"]
 	path = utile-nginx
 	url = https://github.com/SonnyAD/utile-nginx
+	branch = main
 [submodule "utile-bdd"]
 	path = utile-bdd
 	url = https://github.com/SonnyAD/utile-bdd.git
+	branch = main
