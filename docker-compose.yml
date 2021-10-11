@@ -9,6 +9,13 @@ services:
       build: utile-api/.
       ports: 
         - "3000:3000"
+      env_file: 
+        - utile-api/.env
+      restart: always
+  bot:
+      build: utile-bot/.
+      env_file:
+        - utile-bot/.env
       restart: always
   front: 
       build: utile-front/.
