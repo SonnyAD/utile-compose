@@ -43,5 +43,8 @@ jobs:
           known_hosts: ${{ secrets.KNOWN_HOSTS }} 
           config: ${{ secrets.CONFIG }}
           
-      - name: Check the stack online
-        run: docker-compose -H ssh://utile ps
+      - name: Update the stack on the production server
+        run: docker-compose -H ssh://utile up -d --remove-orphans
+
+      - name: Cleans up useless images
+        run: docker -H ssh://utile image prune --force
