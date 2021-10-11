@@ -4,11 +4,14 @@ services:
       build: utile-api-docs/.
       ports: 
         - "8000:8080"
+      restart: always
   api: 
       build: utile-api/.
       ports: 
         - "3000:3000"
+      restart: always
   front: 
       build: utile-front/.
       ports: 
         - "2000:2000"
+      restart: always
