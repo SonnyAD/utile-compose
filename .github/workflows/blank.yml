@@ -6,7 +6,13 @@ on:
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
-
+     inputs:
+      services:
+        description: 'List of services to rebuild'
+        required: true
+      extraparameters:
+        description: 'Extra parameters for docker-compose up -d'  
+  
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -44,7 +50,7 @@ jobs:
           config: ${{ secrets.CONFIG }}
           
       - name: Update the stack on the production server
-        run: COMPOSE_DOCKER_CLI_BUILD=0 docker-compose -H ssh://utile up -d api docs front bot
+        run: COMPOSE_DOCKER_CLI_BUILD=0 docker-compose -H ssh://utile up -d ${{ github.event.inputs.extraparameter }} ${{ github.event.inputs.services }}
 
       - name: Cleans up useless images
         run: docker -H ssh://utile image prune --force
