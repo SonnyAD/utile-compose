@@ -12,6 +12,9 @@ on:
         
   # Allows to receive event through the REST API
   repository_dispatch:
+     inputs:
+      services:
+      extraparameters:
   
 jobs:
   build:
