@@ -1,9 +1,6 @@
 name: CI
 
 on:
-  push:
-    branches: [ main ]
-
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
      inputs:
@@ -12,6 +9,9 @@ on:
         required: true
       extraparameters:
         description: 'Extra parameters for docker-compose up -d'  
+        
+  # Allows to receive event through the REST API
+  repository_dispatch:
   
 jobs:
   build:
