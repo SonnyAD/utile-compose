@@ -1,4 +1,4 @@
-name: CI
+name: Manual build
 
 on:
   # Allows you to run this workflow manually from the Actions tab
@@ -9,9 +9,6 @@ on:
         required: true
       extraparameters:
         description: 'Extra parameters for docker-compose up -d'  
-        
-  # Allows to receive event through the REST API
-  repository_dispatch:
 
 jobs:
   build:
