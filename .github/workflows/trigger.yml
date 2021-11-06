@@ -1,0 +1,47 @@
+name: API Trigger
+
+on:       
+  # Allows to receive event through the REST API
+  repository_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+        name: Checkout repo
+      - name: Checkout submodules
+        uses: textbook/git-checkout-submodule-action@master
+        with:
+          remote: true
+          
+      - name: Create env file
+        run: |
+          touch .env
+          cat << EOF > .env
+          NOTION_SECRET=${{ secrets.NOTION_SECRET }}
+          NOTION_DATABASE_ID=${{ secrets.NOTION_DATABASE_ID }}
+
+          BOT_TOKEN=${{ secrets.BOT_TOKEN }}
+
+          # Front env var, note that the prefix VITE_ is required
+          VITE_VERSION=${{ secrets.VERSION }}
+          VITE_API_URL=${{ secrets.API_URL }}
+          EOF
+          
+      # Add SSH credentials to your GitHub CI/CD instance 
+      - name: Add SSH credentials
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.KEY }} 
+          name: utile_rsa
+          known_hosts: ${{ secrets.KNOWN_HOSTS }} 
+          config: ${{ secrets.CONFIG }}
+          
+      - name: Update the stack on the production server
+        run: COMPOSE_DOCKER_CLI_BUILD=0 docker-compose -H ssh://utile up -d --build ${{ github.event.client_payload.service }}
+
+      - name: Cleans up useless images
+        run: docker -H ssh://utile image prune --force
