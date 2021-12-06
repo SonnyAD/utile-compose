@@ -18,8 +18,8 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
         name: Checkout repo
-        with:
-          submodules: recursive
+      - name: Checkout submodules
+        run: git submodule update --init --recursive --remote
           
       - name: Create env file
         run: |
