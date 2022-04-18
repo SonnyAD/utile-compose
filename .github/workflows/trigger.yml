@@ -23,6 +23,7 @@ jobs:
           cat << EOF > .env
           NOTION_SECRET=${{ secrets.NOTION_SECRET }}
           NOTION_DATABASE_ID=${{ secrets.NOTION_DATABASE_ID }}
+          TWITTER_POST_URL=${{ secrets.TWITTER_POST_URL }}
 
           BOT_TOKEN=${{ secrets.BOT_TOKEN }}
 
