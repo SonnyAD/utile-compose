@@ -16,6 +16,8 @@ services:
       build: utile-bot/.
       env_file:
         - ./.env
+      environment:
+        - NOSTR_PRIVKEY=$NOSTR_PRIVKEY
       restart: always
   front: 
       build: utile-front/.
