@@ -46,7 +46,7 @@ jobs:
           config: ${{ secrets.CONFIG }}
           
       - name: Update the stack on the production server
-        run: COMPOSE_DOCKER_CLI_BUILD=0 docker-compose -H ssh://utile up -d ${{ github.event.inputs.extraparameters }} ${{ github.event.inputs.services }}
+        run: COMPOSE_DOCKER_CLI_BUILD=0 docker-compose -H ssh://utile --env-file /etc/environment up -d ${{ github.event.inputs.extraparameters }} ${{ github.event.inputs.services }}
 
       - name: Cleans up useless images
         run: docker -H ssh://utile image prune --force
