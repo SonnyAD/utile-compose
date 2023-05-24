@@ -20,10 +20,14 @@ jobs:
         name: Checkout repo
       - name: Checkout submodules
         run: git submodule update --init --recursive --remote
+      - name: Install jq
+        uses: dcarbone/install-jq-action@v1.0.1
           
       - name: Create env file
         run: |
           touch .env
+          # Front version
+          export PUBLIC_VERSION=$(jq -r .version utile-front/package.json)
           cat << EOF > .env
           NOTION_SECRET=${{ secrets.NOTION_SECRET }}
           NOTION_DATABASE_ID=${{ secrets.NOTION_DATABASE_ID }}
@@ -32,7 +36,7 @@ jobs:
           BOT_TOKEN=${{ secrets.BOT_TOKEN }}
 
           # Front env var, note that the prefix VITE_ is required
-          VITE_VERSION=${{ secrets.VERSION }}
+          PUBLIC_VERSION=${PUBLIC_VERSION}
           VITE_API_URL=${{ secrets.API_URL }}
           EOF
           
