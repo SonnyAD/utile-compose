@@ -1,7 +1,3 @@
-[submodule "utile-api-docs"]
-	path = utile-api-docs
-	url = https://github.com/SonnyAD/utile-api-docs.git
-	branch = main
 [submodule "utile-api"]
 	path = utile-api
 	url = https://github.com/SonnyAD/utile-api
