@@ -12,7 +12,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -20,8 +20,6 @@ jobs:
         name: Checkout repo
       - name: Checkout submodules
         run: git submodule update --init --recursive --remote
-      - name: Install jq
-        uses: dcarbone/install-jq-action@v1.0.1
           
       - name: Create env file
         run: |
@@ -34,23 +32,14 @@ jobs:
           TWITTER_POST_URL=${{ secrets.TWITTER_POST_URL }}
 
           BOT_TOKEN=${{ secrets.BOT_TOKEN }}
-
+          
           # Front env var, note that the prefix VITE_ is required
           PUBLIC_VERSION=${PUBLIC_VERSION}
           VITE_API_URL=${{ secrets.API_URL }}
           EOF
           
-      # Add SSH credentials to your GitHub CI/CD instance 
-      - name: Add SSH credentials
-        uses: shimataro/ssh-key-action@v2
-        with:
-          key: ${{ secrets.KEY }} 
-          name: utile_rsa
-          known_hosts: ${{ secrets.KNOWN_HOSTS }} 
-          config: ${{ secrets.CONFIG }}
-          
       - name: Update the stack on the production server
-        run: COMPOSE_DOCKER_CLI_BUILD=0 docker-compose -H ssh://utile --env-file /etc/environment up -d ${{ github.event.inputs.extraparameters }} ${{ github.event.inputs.services }}
+        run: docker compose --env-file /etc/environment up -d ${{ github.event.inputs.extraparameters }} ${{ github.event.inputs.services }}
 
       - name: Cleans up useless images
-        run: docker -H ssh://utile image prune --force
+        run: docker image prune --force

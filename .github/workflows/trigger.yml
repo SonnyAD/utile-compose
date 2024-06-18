@@ -6,7 +6,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -30,17 +30,8 @@ jobs:
           VITE_API_URL=${{ secrets.API_URL }}
           EOF
           
-      # Add SSH credentials to your GitHub CI/CD instance 
-      - name: Add SSH credentials
-        uses: shimataro/ssh-key-action@v2
-        with:
-          key: ${{ secrets.KEY }} 
-          name: utile_rsa
-          known_hosts: ${{ secrets.KNOWN_HOSTS }} 
-          config: ${{ secrets.CONFIG }}
-          
       - name: Update the stack on the production server
-        run: COMPOSE_DOCKER_CLI_BUILD=0 docker-compose -H ssh://utile up -d --build ${{ github.event.client_payload.service }}
+        run: docker compose up -d --build ${{ github.event.client_payload.service }}
 
       - name: Cleans up useless images
-        run: docker -H ssh://utile image prune --force
+        run: docker image prune --force
