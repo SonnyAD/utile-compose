@@ -39,7 +39,7 @@ jobs:
           EOF
           
       - name: Update the stack on the production server
-        run: docker compose --remove-orphans --env-file /etc/environment up -d ${{ github.event.inputs.extraparameters }} ${{ github.event.inputs.services }}
+        run: docker compose --env-file /etc/environment up --remove-orphans -d ${{ github.event.inputs.extraparameters }} ${{ github.event.inputs.services }}
 
       - name: Cleans up useless images
         run: docker image prune --force
