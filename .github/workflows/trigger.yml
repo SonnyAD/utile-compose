@@ -18,6 +18,7 @@ jobs:
       - name: Create env file
         run: |
           touch .env
+          export PUBLIC_VERSION=$(jq -r .version utile-front/package.json)
           cat << EOF > .env
           NOTION_SECRET=${{ secrets.NOTION_SECRET }}
           NOTION_DATABASE_ID=${{ secrets.NOTION_DATABASE_ID }}
@@ -26,12 +27,12 @@ jobs:
           BOT_TOKEN=${{ secrets.BOT_TOKEN }}
 
           # Front env var, note that the prefix VITE_ is required
-          VITE_VERSION=${{ secrets.VERSION }}
+          PUBLIC_VERSION=${PUBLIC_VERSION}
           VITE_API_URL=${{ secrets.API_URL }}
           EOF
           
       - name: Update the stack on the production server
-        run: docker compose up -d --build ${{ github.event.client_payload.service }}
+        run: docker compose --env-file /etc/environment up --remove-orphans -d ${{ github.event.client_payload.service }}
 
       - name: Cleans up useless images
         run: docker image prune --force
