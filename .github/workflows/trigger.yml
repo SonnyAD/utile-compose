@@ -32,7 +32,7 @@ jobs:
           EOF
           
       - name: Update the stack on the production server
-        run: docker compose --env-file /etc/environment up --remove-orphans -d ${{ github.event.client_payload.service }}
+        run: docker compose --env-file /etc/environment up --build --remove-orphans -d ${{ github.event.client_payload.service }}
 
       - name: Cleans up useless images
         run: docker image prune --force
