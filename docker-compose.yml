@@ -13,7 +13,8 @@ services:
       environment:
         - NOSTR_PRIVKEY=$NOSTR_PRIVKEY
       restart: always
-  front: 
+  front:
+      image: ghcr.io/sonnyad/utile-front:main
       build: utile-front/.
       ports: 
         - "2000:2000"

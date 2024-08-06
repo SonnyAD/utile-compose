@@ -10,9 +10,15 @@ on:
       extraparameters:
         description: 'Extra parameters for docker-compose up -d'  
 
+env:
+  REGISTRY: ghcr.io
+
 jobs:
   build:
     runs-on: self-hosted
+
+    permissions:
+      id-token: write    
 
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -37,7 +43,14 @@ jobs:
           PUBLIC_VERSION=${PUBLIC_VERSION}
           VITE_API_URL=${{ secrets.API_URL }}
           EOF
-          
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+        
       - name: Update the stack on the production server
         run: docker compose --env-file /etc/environment up --remove-orphans -d ${{ github.event.inputs.extraparameters }} ${{ github.event.inputs.services }}
 
