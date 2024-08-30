@@ -10,10 +10,6 @@
 	path = utile-nginx
 	url = https://github.com/SonnyAD/utile-nginx
 	branch = main
-[submodule "utile-bdd"]
-	path = utile-bdd
-	url = https://github.com/SonnyAD/utile-bdd.git
-    branch = develop
 [submodule "utile-bot"]
 	path = utile-bot
 	url = https://github.com/SonnyAD/utile-bot.git
