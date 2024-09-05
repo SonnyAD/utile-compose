@@ -1,11 +1,13 @@
 services:
   api: 
+      image: ghcr.io/sonnyad/utile-front:main
       build: utile-api/.
       ports: 
         - "3000:3000"
       env_file: 
         - ./.env
       restart: always
+      pull_policy: always
   bot:
       build: utile-bot/.
       env_file:
@@ -18,7 +20,7 @@ services:
       build: utile-front/.
       ports: 
         - "2000:2000"
-      restart: always
       env_file:
         - ./.env
+      restart: always
       pull_policy: always
