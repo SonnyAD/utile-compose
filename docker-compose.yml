@@ -1,6 +1,6 @@
 services:
   api: 
-      image: ghcr.io/sonnyad/utile-front:main
+      image: ghcr.io/sonnyad/utile-api:main
       build: utile-api/.
       ports: 
         - "3000:3000"
