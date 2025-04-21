@@ -24,3 +24,19 @@ services:
         - ./.env
       restart: always
       pull_policy: always
+  spectrum-frontend:
+      image: ghcr.io/opinions-sur-rue/spectrum-frontend:latest
+      ports: 
+        - "3001:3000"
+      env_file:
+        - ./.env
+      restart: always
+      pull_policy: always
+  spectrum-backend:
+      image: ghcr.io/opinions-sur-rue/spectrum-backend:latest
+      ports: 
+        - "2001:2000"
+      env_file:
+        - ./.env
+      restart: always
+      pull_policy: always
