@@ -45,7 +45,7 @@ jobs:
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          password: ${{ secrets.CI_ACCESS_TOKEN }}
           
       - name: Update the stack on the production server
         run: docker compose --env-file /etc/environment up --remove-orphans -d ${{ env.SERVICE }}
