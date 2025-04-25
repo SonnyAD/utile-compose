@@ -3,9 +3,16 @@ name: API Trigger
 on:       
   # Allows to receive event through the REST API
   repository_dispatch:
+  workflow_call:
+    inputs:
+      service:
+        description: What is the name of the service to deploy?
+        required: true
+        type: string    
 
 env:
   REGISTRY: ghcr.io
+  SERVICE: ${{ github.event.client_payload.service || inputs.service }}
 
 jobs:
   build:
@@ -44,7 +51,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
           
       - name: Update the stack on the production server
-        run: docker compose --env-file /etc/environment up --remove-orphans -d ${{ github.event.client_payload.service }}
+        run: docker compose --env-file /etc/environment up --remove-orphans -d ${{ env.SERVICE }}
 
       - name: Cleans up useless images
         run: docker image prune --force
